@@ -60,7 +60,7 @@ def registration():
 
 #Registro de proveedor
 @app.route('/registrop', methods=["get", "post"])
-def registration():
+def registrationP():
     if request.method == "POST":
         #Capturamos las variables del formulario
         nombre      =   request.form["name"]
@@ -105,7 +105,7 @@ def login():
 
 #Ruta para logueo de comercios
 @app.route('/loginp', methods=["get","post"])
-def loginProveedor():
+def loginP():
     if request.method == "POST":
         ruc=request.form["ruc"]
         comercio = ClassProveedor.obtenerProveedor(ruc=ruc)

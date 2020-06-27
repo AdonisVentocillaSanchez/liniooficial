@@ -1,0 +1,38 @@
+{% extends "/layouts/application.html" %}
+{% block content %}
+<!-- Header con logo de Linio -->
+{% include '/layouts/header.html' %}
+
+<!-- Título de la página -->
+<h1>Crea tu cuenta en Linio Express</h1>
+
+<!-- Mensaje de error -->
+{% if error %}
+  <h3 style="color:Tomato;">{{error}}</h3>
+{% endif %}
+
+
+<!--Formulario de registro -->
+<form role="form" id="SignUpForm", method="post">
+    <!-- Input de nombre -->
+    <label for="name">Nombres</label><br>
+    <input id="name" type="text" name="name"><br><br>
+    <!-- Input de primer apellido -->
+    <label for="address">Direccion</label><br>
+    <input id="address" type="text" name="address"><br><br>
+    <!-- Input de edad -->
+    <label for="ruc">RUC</label><br>
+    <input id="ruc" type="number" name="ruc"><br><br>
+    <!-- Input de Documento -->
+    <label for="password">Contraseña</label><br>
+    <input id="password" type="text" name="password"><br><br>
+    <!-- Botón para enviar datos del formualario -->
+    <button type="submit">Registrarse</button>
+</form>
+
+
+<!-- Enlace a Inicio de sesión en caso el usuario ya tenga cuenta -->
+<h3>¿Ya tienes una cuenta en Linio?</h3>
+<a href="{{ url_for('loginP') }}">Iniciar sesión</a>
+
+{% endblock %}
