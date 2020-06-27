@@ -37,22 +37,25 @@ class Proveedor(object):
         self.__ruc = pruc
 
     @property
-    def ListaProducto(self):
-        return self.__ListaProducto
-    @ListaProducto.setter
-    def ListaProducto(self, pListaProducto):
-        self.__ListaProducto = pListaProducto
+    def password(self):
+        return self.__password
+    @password.setter
+    def password(self, value):
+        self.__password = value
+
+
+
     
     ## CREAR CUENTA
     def crearProveedor(self) -> bool:
         status  = False
-        database = sqlite3.connect("data/Proyecto_Linio.db")  # ABRIR CONEXION CON BASE DE DATOS
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
             INSERT INTO proveedor(nombre, direccion, ruc, password)
             VALUES ('{}', '{}', {}, '{}')
-            '''.format(self.nombre, self.direccion, self.ruc, self.__password)
+            '''.format(self.__nombre, self.__direccion, self.__ruc, self.__password)
 
             cursor.execute(query)
             database.commit()  # CONFIRMAR CAMBIOS QUERY
@@ -80,15 +83,9 @@ class Proveedor(object):
 
             cursor.execute(query)
             dato = cursor.fetchone()
-            proveedorNew = Proveedor(
-                codigo      =dato[0],
-                nombre      =dato[1],
-                direccion   =dato[2],
-                ruc         =dato[3],
-                password    =dato[4]
-            )
+            
 
-            return proveedorNew
+            return dato
 
         except Exception as e:
             print("Error: {}".format(e))

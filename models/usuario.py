@@ -7,16 +7,16 @@ class Usuario(object):
                 documento:str=None, edad:int=None, email:str=None,
                 telefono:int=None, tarjeta_banco:int=None, username:str=None,
                 password:str=None):
-        self.codigo = codigo
-        self.nombres = nombres
-        self.apellidos = apellidos
-        self.documento = documento
-        self.edad = edad
-        self.email = email
-        self.telefono = telefono
-        self.tarjeta_banco = tarjeta_banco
-        self.username = username
-        self.password = password
+        self.__codigo = codigo
+        self.__nombres = nombres
+        self.__apellidos = apellidos
+        self.__documento = documento
+        self.__edad = edad
+        self.__email = email
+        self.__telefono = telefono
+        self.__tarjeta_banco = tarjeta_banco
+        self.__username = username
+        self.__password = password
 
     @property
     def password(self) -> str:
@@ -61,10 +61,6 @@ class Usuario(object):
     @codigo.setter
     def codigo(self, pcodigo):
         self.__codigo = pcodigo
-
-    @nombre.setter
-    def nombres(self, pnombres):
-        self.__nombres = pnombres
 
     @apellidos.setter
     def apellidos(self, papellidos):

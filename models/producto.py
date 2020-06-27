@@ -7,64 +7,65 @@ class IterableProducto(type):
 
 class Producto(object):
     __metaclass__ = IterableProducto
-    def __init__(self, codigo:str, nombre: str, descripcion: str, precio: float, stock: int, categoria: int, tienda:str):
-        self.__codigo       = None
-        self.__nombre       = nombre
-        self.__descripcion  = descripcion
-        self.__precio       = precio
-        self.__stock        = stock
-        self.__categoria    = categoria
-        self.__tienda       = tienda
+    def __init__(self, codigo:str = None, nombre: str= None, descripcion: str= None, precio: float= None, stock: int= None, categoria: int= None, tienda:str= None):
+        self.codigo       = codigo
+        self.nombre       = nombre
+        self.descripcion  = descripcion
+        self.precio       = precio
+        self.stock        = stock
+        self.categoria    = categoria
+        self.tienda       = tienda
 
     ## GETTER ##
     @property
-    def getCodigo(self) -> str:
+    def codigo(self) -> str:
         return self.__codigo
-
-    @property
-    def getNombre(self) -> str:
-        return self.__nombre
-
-    @property
-    def getDescripcion(self) -> str:
-        return self.__descripcion
-
-    @property
-    def getPrecio(self) -> float:
-        return self.__precio
-
-    @property
-    def getstock(self) -> int:
-        return self.__precio
-
-    @property
-    def getCategoria(self) -> int:
-        return self.__categoria
-
-    @property
-    def getTienda(self) -> str:
-        return self.__tienda
-
-    @nombre.setter
-    def setNombre(self, new_value):
-        self.__nombre = new_value
+    @codigo.setter
+    def codigo(self, new_value):
+        self.__codigo = new_value
     
-    ##SETTER ##
+    @property
+    def nombre(self) -> str:
+        return self.__nombre
+    @nombre.setter
+    def nombre(self, new_value):
+        self.__nombre = new_value
+
+    @property
+    def descripcion(self):
+        return self.__descripcion
     @descripcion.setter
-    def setDescripcion(self, new_value):
+    def descripcion(self, new_value):
         self.__descripcion = new_value
 
+    @property
+    def precio(self):
+        return self.__precio
     @precio.setter
-    def setPrecio(self, new_value):
+    def precio(self, new_value):
         self.__precio = new_value
-    
+
+    @property
+    def stock(self):
+        return self.__stock
     @stock.setter
-    def setStock(self, new_value):
+    def stock(self, new_value):
         self.__stock = new_value
 
+    @property
+    def categoria(self):
+        return self.__categoria
     @categoria.setter
-    def setCategoria(self, new_value):
+    def categoria(self, new_value):
         self.__categoria = new_value
+
+    @property
+    def tienda(self):
+        return self.__tienda
+    @tienda.setter
+    def tienda(self, new_value):
+        self.__tienda = new_value
+
 
     ## GENERERAR CODIGO DE PRODUCTO
     def generarCodigo(self) -> str:
@@ -73,7 +74,7 @@ class Producto(object):
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
-            SELECT COUNT(*) FROM productos'''
+            SELECT COUNT(*) FROM producto'''
             cursor.execute(query)
             count = cursor.fetchone()
         except Exception as e:
@@ -86,11 +87,11 @@ class Producto(object):
     ## AGREGAR NUEVO PRODUCTO
     def agregar_producto(self) -> bool:
         estado_op = False
-        database = sqlite3.connect("data/linioexp.db")  # ABRIR CONEXION CON BASE DE DATOS
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
-                    INSERT INTO productos(codigo, nombre, descripcion, precio, stock, categoria, tienda)
+                    INSERT INTO producto(codigo, nombre, descripcion, precio, stock, categoria, tienda)
                     VALUES ('{}', '{}', '{}', {}, {}, {}, '{}')
                     '''.format(self.generarCodigo(), self.__nombre, self.__descripcion,
                             self.__precio, self.__stock, self.__categoria, self.__tienda)
@@ -108,7 +109,7 @@ class Producto(object):
     ## OBTENER TODOS LOS PRODUCTOS
     def obtenerProductos(self):
         list_product = None
-        database = sqlite3.connect("data/linioexp.db")  # ABRIR CONEXION CON BASE DE DATOS
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''

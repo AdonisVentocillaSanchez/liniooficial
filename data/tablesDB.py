@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS proveedor (
     nombre TEXT NOT NULL,
     direccion TEXT NOT NULL,
     RUC INTEGER,
-    contrasena TEXT NOT NULL)
+    password TEXT NOT NULL)
     """)
 con.commit()
 

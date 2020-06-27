@@ -1,7 +1,7 @@
 # Importación de clases
 from functools import wraps
 from flask import Flask, render_template, request, redirect, session, g
-from models.Usuario import Usuario
+from models.usuario import Usuario
 from models.proveedor import Proveedor
 from models.categoria import Categoria
 from models.producto import Producto
@@ -78,7 +78,7 @@ def registrationP():
         if estado_op:
             return redirect("loginp")
         else:
-            error = 'Invalid email'
+            error = 'Revise sus datos'
             return render_template('proveedor/register.html', error=error)
 
     return render_template('proveedor/register.html', request=request)
@@ -110,8 +110,9 @@ def loginP():
         ruc=request.form["ruc"]
         comercio = ClassProveedor.obtenerProveedor(ruc=ruc)
 
-        if request.form["password"] == comercio.contrasena:
-            session['user_name'] = comercio.ruc
+        if request.form["password"] == comercio[4]:
+            session['user_ruc'] = comercio[3]
+            session['user_nombrep'] = comercio[1]
             session['type'] = 2
             return redirect("/")
         else:
@@ -136,6 +137,36 @@ def logout():
     session['user_name'] = None
     session['user_email'] = None
     return redirect("/")
+
+#Ruta para Registrar un producto SOLO para Comercios
+@app.route('/registroProducto', methods=["get","post"])
+def registrarProducto():
+    if request.method == "POST":
+        nombre = request.form["nombre"]
+        categoria = int(request.form["categoria"])
+        descripcion = request.form["descripcion"]
+        precio = int(request.form["precio"])
+        stock = int(request.form["stock"])
+        nombreProveedor = session['user_nombrep']
+
+        produc = Producto(
+            nombre  =nombre,
+            descripcion=descripcion,
+            precio=precio,
+            stock=stock,
+            categoria=categoria,
+            tienda=nombreProveedor
+        )
+
+        estado_op = produc.agregar_producto()
+
+        if produc:
+            return redirect("/")
+        else:
+            error = 'Verifique los datos'
+            return render_template('products/register.html', error=error)
+
+    return render_template('products/register.html')
 
 #Ruta para listar productos segun la categoria y buscador segun nombre dentro de la categoria
 @app.route('/productoCategoria/<id_categoria>', methods=["get","post"])

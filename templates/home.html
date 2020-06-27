@@ -13,10 +13,11 @@
     
     {% for categoria in categorias %}
     <li>
-        <a href="{{ url_for('product_category',idCategoria = categoria[0]) }}">{{categoria[1]}}</a>
+        <a href="{{ url_for('product_category',id_categoria = categoria[0]) }}">{{categoria[1]}}</a>
     </li>
     {% endfor %}
 
 <!-- Footer -->
 {% include '/layouts/footer.html' %}
 {% endblock %}
+ 
