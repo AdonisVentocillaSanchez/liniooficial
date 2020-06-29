@@ -28,7 +28,7 @@
     <input id="document" type="text" name="document"><br><br>
     <!-- Input de correo electronico -->
     <label for="email">Correo electrónico</label><br>
-    <input id="email" type="text" name="email"><br><br>
+    <input id="email" type="email" name="email"><br><br>
     <!-- Input de Telefono -->
     <label for="phone">Teléfono</label><br>
     <input id="phone" type="text" name="phone"><br><br>
@@ -50,4 +50,6 @@
 <h3>¿Ya tienes una cuenta en Linio?</h3>
 <a href="{{ url_for('login') }}">Iniciar sesión</a>
 
+<!-- Footer -->
+{% include '/layouts/footer.html' %}
 {% endblock %}

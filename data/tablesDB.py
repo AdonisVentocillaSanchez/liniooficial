@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     telefono INTEGER,
     tarjeta_banco INTEGER,
     username TEXT NOT NULL,
-    contrasena TEXT NOT NULL)
+    password TEXT NOT NULL)
     """)
 con.commit()
 

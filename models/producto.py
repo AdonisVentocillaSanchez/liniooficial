@@ -70,7 +70,7 @@ class Producto(object):
     ## GENERERAR CODIGO DE PRODUCTO
     def generarCodigo(self) -> str:
         count = 0
-        database = sqlite3.connect("data/linioexp.db")  # ABRIR CONEXION CON BASE DE DATOS
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''

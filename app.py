@@ -9,7 +9,7 @@ from models.producto import Producto
 
 app = Flask(__name__)
 
-## IMPORTACION DE CLASES
+## Instancia  DE CLASES
 ClassUsuario    = Usuario()
 ClassProveedor  = Proveedor()
 ClassCategoria  = Categoria()
@@ -19,7 +19,7 @@ ClassProducto   = Producto()
 @app.route('/')
 def home():
     categorias = ClassCategoria.obtenerCategorias()
-    return render_template('home.html', categorias = categorias)
+    return render_template('home.html', categoriasB = categorias)
 
 #Registro de usuario
 @app.route('/registro', methods=["get", "post"])
@@ -126,7 +126,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session['user_name'] is None:
-            return redirect('inicio-sesion')
+            return redirect('login')
         return f(*args, **kwargs)
     return decorated_function
 
@@ -134,8 +134,8 @@ def login_required(f):
 @app.route('/logout')
 @login_required
 def logout():
-    session['user_name'] = None
-    session['user_email'] = None
+    # Borramos todas las sesiones
+    session.clear()
     return redirect("/")
 
 #Ruta para Registrar un producto SOLO para Comercios
@@ -145,7 +145,7 @@ def registrarProducto():
         nombre = request.form["nombre"]
         categoria = int(request.form["categoria"])
         descripcion = request.form["descripcion"]
-        precio = int(request.form["precio"])
+        precio = request.form["precio"]
         stock = int(request.form["stock"])
         nombreProveedor = session['user_nombrep']
 
@@ -189,12 +189,11 @@ def product_category(id_categoria):
 # Mostrar los detalles del producto
 @app.route('/producto/<idproducto>',methods=["get"])
 def product_detail(idproducto):
-    productos= Producto.obtenerProducto(codigo= idproducto)
+    productos= ClassProducto.obtenerProducto(codigo= idproducto)
     return render_template('products/detail.html', productos=productos)
 
 
 
 if __name__ == "__main__":
     app.secret_key = "clave_super_ultra_secreta"
-
     app.run(debug=True)

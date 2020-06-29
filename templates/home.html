@@ -11,7 +11,7 @@
 
   <h3>Categorías</h3>
     
-    {% for categoria in categorias %}
+    {% for categoria in categoriasB %}
     <li>
         <a href="{{ url_for('product_category',id_categoria = categoria[0]) }}">{{categoria[1]}}</a>
     </li>

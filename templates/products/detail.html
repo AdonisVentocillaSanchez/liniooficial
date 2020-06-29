@@ -5,12 +5,19 @@
 
 <!-- Título de la página -->
 <h1>Detalle del Producto</h1>
+
+{% if productos %}
 <ul>
-{% for producto in productos %}
-    <li>Nombre: {{producto[1]}}</li>
-    <li>Descripción: {{producto[2]}}</li>
-    <li>Precio: {{producto[3]}}</li>
-    <li>Precio Venta: {{producto[4]}}</li>
-    <li>Estado: {{producto[5]}}</li>
-{% endfor %}
+    <li>Nombre: {{productos[1]}}</li>
+    <li>Descripción: {{productos[2]}}</li>
+    <li>Precio: {{productos[3]}}</li>
+    <li>Disponibles: {{productos[4]}}</li>
+    <li>Tienda: {{productos[6]}}</li>
 </ul>
+{% else %}
+    <h2 style="color:red;">No se ha encontrado tu producto</h2>
+{% endif %}
+
+<!-- Footer -->
+{% include '/layouts/footer.html' %}
+{% endblock %}

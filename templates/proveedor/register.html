@@ -15,7 +15,7 @@
 <!--Formulario de registro -->
 <form role="form" id="SignUpForm", method="post">
     <!-- Input de nombre -->
-    <label for="name">Nombres</label><br>
+    <label for="name">Nombre de Tienda</label><br>
     <input id="name" type="text" name="name"><br><br>
     <!-- Input de primer apellido -->
     <label for="address">Direccion</label><br>
@@ -35,4 +35,6 @@
 <h3>¿Ya tienes una cuenta en Linio?</h3>
 <a href="{{ url_for('loginP') }}">Iniciar sesión</a>
 
+<!-- Footer -->
+{% include '/layouts/footer.html' %}
 {% endblock %}

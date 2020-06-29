@@ -1,5 +1,4 @@
 import sqlite3
-from datetime import datetime
 
 class Usuario(object):
     
@@ -93,8 +92,9 @@ class Usuario(object):
     ## CREAR CUENTA
     def crearUsuario(self) -> bool:
         status  = False
-        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
+        
         try:
+            database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
             INSERT INTO usuario(nombres, apellidos, documento, edad, email, telefono, tarjeta_banco, username, password)
@@ -111,12 +111,11 @@ class Usuario(object):
             print("Error: {}".format(e))
         finally:
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
-
-        return status
+            return status
 
     #OBTENER USUARIO
     def obtenerUsuario(self, username:str):
-        usuario=None
+        usuario = None
         try:
             database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
@@ -140,9 +139,10 @@ class Usuario(object):
                 username        =usuario[8],
                 password        =usuario[9]
             )
+            return user
 
         except Exception as e:
             print("Error: {}".format(e))
         finally:
-                database.close()
-        return user
+            database.close()
+            return user

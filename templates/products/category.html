@@ -24,13 +24,17 @@
   {% if product_list %}
     {% for product in product_list %}
             <div>
-                <p>Nombre del Producto: {{product[3]}}</p>
+                <p>Nombre del Producto: {{product[2]}}</p>
                 <p>Tienda: {{product[6]}}</p>
-                <p>Precio: {{product[5]}}</p>
-                <img src="https://linio-express.s3-sa-east-1.amazonaws.com/ilustraciones/welcome_illustration.svg" width="100"><br>
-                <a href="{{ url_for('product_detail', id_producto = product[0]) }}">Ver producto</a>
+                <p>Precio: {{product[3]}}</p>
+                <a href="{{ url_for('product_detail', idproducto = product[0]) }}">Ver producto</a>
             </div>
     {% endfor %}
+  {% else %}
+          <h2>Aún no hay producto disponibles</h2>
   {% endif %}
+
+  <!-- Footer -->
+{% include '/layouts/footer.html' %}
   
 {% endblock %}
