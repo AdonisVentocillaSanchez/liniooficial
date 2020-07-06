@@ -51,7 +51,7 @@ def registration():
         if estado_op:
             return redirect("login")
         else:
-            error = 'Invalid email'
+            error = 'No se ha podido registrar su cuenta'
             return render_template('users/register.html', error=error)
 
     return render_template('users/register.html', request=request)
@@ -87,6 +87,9 @@ def login():
     if request.method == "POST":
         username=request.form["username"]
         user = ClassUsuario.obtenerUsuario(username = username)
+        if not user:
+            error = 'No se encuentra registrado'
+            return render_template('users/login.html', error=error)
 
         if request.form["password"] == user.password:
             session['user_id'] = user.codigo
@@ -107,6 +110,9 @@ def loginP():
     if request.method == "POST":
         ruc=int(request.form["ruc"])
         comercio = ClassProveedor.obtenerProveedor(ruc=ruc)
+        if not comercio:
+            error = 'No se encuentra registrado'
+            return render_template('proveedor/login.html', error=error)
 
         if request.form["password"] == comercio[4]:
             session['user_ruc'] = comercio[3]

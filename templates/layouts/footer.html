@@ -1,28 +1,25 @@
 <!-- El footer es la sección que va al final de la página -->
 <footer>
     <!-- Botón para regresar a la página anterior desde cualquier parte -->
-    <br>
-    <button onclick="volver()">Regresar a la página anterior</button>
 	<script type="text/javascript">
 	  function volver(){
 	    history.back();
 	  }
-	</script>
+    </script>
+    <br><br>
     <!-- En el footer pondremos información adicional sobre el negocio -->
-    <h3>Acerca de linio</h3>
-    <ul class="">
-        <!-- Usaremos la propiedad target="_blank" para que el enlace abra en otra pestaña -->
-        <a href="#" target="_blank">
-            <li>Historia</li>
-        </a>
-        <a href="#" target="_blank">
-            <li>Ayuda</li>
-        </a>
-        <a href="#" target="_blank">
-            <li>Términos y condiciones</li>
-        </a>
-        <a href="#" target="_blank">
-            <li>Legales</li>
-        </a>
-    </ul>
+    <div class="card">
+        <div class="card-header">
+            Acerca de linio 
+        </div>
+        <div class="card-body">
+            <div class="card text-right" style="width: 18rem;">
+                <button type="button" onclick="volver()" class="btn btn-info">Regresar a la página anterior</button>
+            </div>
+            <a href="#" target="_blank" class="btn btn-primary">Historia</a>
+            <a href="#" target="_blank" class="btn btn-primary">Ayuda</a>
+            <a href="#" target="_blank" class="btn btn-primary">Términos y condiciones</a>
+            <a href="#" target="_blank" class="btn btn-primary">Legales</a>
+        </div>
+      </div>
 </footer>

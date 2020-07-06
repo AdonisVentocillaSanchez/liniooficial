@@ -89,7 +89,7 @@ class Usuario(object):
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
             INSERT INTO usuario(nombres, apellidos, documento, edad, email, telefono, username, password)
-            VALUES ('{}', '{}', '{}', {}, '{}','{}', '{}', '{}', '{}')
+            VALUES ('{}', '{}', '{}', {}, '{}','{}', '{}', '{}')
             '''.format(self.__nombres, self.__apellidos, self.__documento, self.__edad, self.__email, self.__telefono, self.__username, self.__password)
 
             cursor.execute(query)
@@ -135,4 +135,4 @@ class Usuario(object):
             print("Error: {}".format(e))
         finally:
             database.close()
-            return user
+            return usuario

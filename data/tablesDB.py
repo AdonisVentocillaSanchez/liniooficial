@@ -60,7 +60,9 @@ CREATE TABLE IF NOT EXISTS producto (
     precio DOUBLE,
     stock INTEGER,
     categoria INTEGER,
-    tienda TEXT NOT NULL,
-    FOREIGN KEY(categoria) REFERENCES categoria(codigo_categoria)
-    )""")
+    tienda Integer NOT NULL,
+    FOREIGN KEY(categoria) REFERENCES categoria(codigo_categoria),
+    FOREIGN KEY(tienda) REFERENCES proveedor(codigo)
+    )"""
+    )
 con.commit()
