@@ -71,20 +71,18 @@ class Proveedor(object):
         return status
 
     ## OBTENER PROVEEDOR
-    def obtenerProveedor(self, ruc:str):
+    def obtenerProveedor(self, ruc:int) ->list:
         dato=None
         try:
             database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
                 SELECT *
-                FROM proveedor WHERE ruc = '{}'
+                FROM proveedor WHERE RUC = {}
                 '''.format(ruc)
 
             cursor.execute(query)
             dato = cursor.fetchone()
-            
-
             return dato
 
         except Exception as e:

@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS usuario (
     edad INTEGER,
     email TEXT NOT NULL,
     telefono INTEGER,
-    tarjeta_banco INTEGER,
     username TEXT NOT NULL,
     password TEXT NOT NULL)
     """)

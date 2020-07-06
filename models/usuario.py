@@ -4,7 +4,7 @@ class Usuario(object):
     
     def __init__(self, codigo:int=None, nombres:str=None, apellidos:str=None,
                 documento:str=None, edad:int=None, email:str=None,
-                telefono:int=None, tarjeta_banco:int=None, username:str=None,
+                telefono:int=None, username:str=None,
                 password:str=None):
         self.__codigo = codigo
         self.__nombres = nombres
@@ -13,7 +13,6 @@ class Usuario(object):
         self.__edad = edad
         self.__email = email
         self.__telefono = telefono
-        self.__tarjeta_banco = tarjeta_banco
         self.__username = username
         self.__password = password
 
@@ -50,10 +49,6 @@ class Usuario(object):
         return self.__telefono
 
     @property
-    def tarjeta_banco(self) -> str:
-        return self.__tarjeta_banco
-
-    @property
     def username(self) -> str:
         return self.__username
 
@@ -77,10 +72,6 @@ class Usuario(object):
     def telefono(self, ptelefono):
         self.__telefono = ptelefono
 
-    @tarjeta_banco.setter
-    def tarjeta_banco(self, ptarjeta_banco):
-        self.__tarjeta_banco = ptarjeta_banco
-
     @username.setter
     def username(self, pusername):
         self.__username = pusername
@@ -97,9 +88,9 @@ class Usuario(object):
             database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
-            INSERT INTO usuario(nombres, apellidos, documento, edad, email, telefono, tarjeta_banco, username, password)
+            INSERT INTO usuario(nombres, apellidos, documento, edad, email, telefono, username, password)
             VALUES ('{}', '{}', '{}', {}, '{}','{}', '{}', '{}', '{}')
-            '''.format(self.__nombres, self.__apellidos, self.__documento, self.__edad, self.__email, self.__telefono, self.__tarjeta_banco, self.__username, self.__password)
+            '''.format(self.__nombres, self.__apellidos, self.__documento, self.__edad, self.__email, self.__telefono, self.__username, self.__password)
 
             cursor.execute(query)
             database.commit()  # CONFIRMAR CAMBIOS QUERY
@@ -135,9 +126,8 @@ class Usuario(object):
                 edad            =usuario[4],
                 email           =usuario[5],
                 telefono        =usuario[6],
-                tarjeta_banco   =usuario[7],
-                username        =usuario[8],
-                password        =usuario[9]
+                username        =usuario[7],
+                password        =usuario[8]
             )
             return user
 

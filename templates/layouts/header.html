@@ -18,18 +18,18 @@
     <!--Menu logueo Proveedor-->
     {% elif session['type'] == 2 %}
 
-    <h2> Tienda : {{session['user_nombrep']}}</h2>
+    <h2> Tienda : {{session['user_name']}}</h2>
     <h2> RUC : {{session['user_ruc']}}</h2>
-    <a href="{{ url_for('logout') }}">Cerrar sesión</a><br>
+    <a href="{{ url_for('logoutP') }}">Cerrar sesión</a><br>
     <a href="{{ url_for('registrarProducto') }}">Añadir un producto</a>
 
     {% else %}
 
     <!-- Ponemos un enlace para que el usuario ingrese a su cuenta y otro para el registro -->
-    <a href="{{ url_for('login') }}">Iniciar sesión</a> <br>
-    <a href="{{ url_for('loginP') }}">Iniciar sesión como Comercio</a>
+    <a href="{{ url_for('login') }}">Iniciar sesión como Cliente</a> <br>
+    <a href="{{ url_for('loginP') }}">Iniciar sesión como Proveedor</a>
     <br><br>
-    <a href="{{ url_for('registration') }}">Registrarse como Usuario</a><br>
+    <a href="{{ url_for('registration') }}">Registrarse como Cliente</a><br>
     <a href="{{ url_for('registrationP') }}">Registrarse como Proveedor</a>
 
     {% endif %}

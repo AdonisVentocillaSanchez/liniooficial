@@ -30,8 +30,7 @@ def registration():
         apellidos   =   request.form["lastname"]
         documento   =   request.form["document"]
         email       =   request.form["email"]
-        telefono    =   request.form["phone"]        
-        tarjeta     =   int(request.form["tarjeta"])
+        telefono    =   request.form["phone"]
         edad        =   int(request.form["age"])
 
         username    =   request.form["username"]
@@ -44,7 +43,6 @@ def registration():
                 edad            =edad,
                 email           =email,
                 telefono        =telefono,
-                tarjeta_banco   =tarjeta,
                 username        =username,
                 password        =password
             )
@@ -107,7 +105,7 @@ def login():
 @app.route('/loginp', methods=["get","post"])
 def loginP():
     if request.method == "POST":
-        ruc=request.form["ruc"]
+        ruc=int(request.form["ruc"])
         comercio = ClassProveedor.obtenerProveedor(ruc=ruc)
 
         if request.form["password"] == comercio[4]:
@@ -138,8 +136,26 @@ def logout():
     session.clear()
     return redirect("/")
 
+# Funcion solo permitir el ingreso si estas logueado
+def login_requiredP(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session['user_ruc'] is None:
+            return redirect('loginp')
+        return f(*args, **kwargs)
+    return decorated_function
+
+#Cerrar sesion
+@app.route('/logoutP')
+@login_requiredP
+def logoutP():
+    # Borramos todas las sesiones
+    session.clear()
+    return redirect("/")
+
 #Ruta para Registrar un producto SOLO para Comercios
 @app.route('/registroProducto', methods=["get","post"])
+@login_requiredP
 def registrarProducto():
     if request.method == "POST":
         nombre = request.form["nombre"]

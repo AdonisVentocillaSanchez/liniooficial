@@ -146,6 +146,26 @@ class Producto(object):
 
         return list_product
 
+        ## BUSCADOR POR NOMBRE
+    def buscarProducto(self, nombre:str):
+        lista_productos = None
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
+        try:
+            cursor = database.cursor()  # OBTENER OBJETO CURSOR
+            query = '''
+                    SELECT *
+                    FROM producto
+                    WHERE nombre LIKE '%{}%'
+                    '''.format(nombre)
+            cursor.execute(query)
+            lista_productos = cursor.fetchall()
+            return lista_productos
+        except Exception as e:
+            database.rollback()  # RESTAURAR ANTES DE CAMBIOS POR ERROR
+            print("Error: {}".format(e))
+        finally:
+            database.close()  # CERRAR CONEXION CON BASE DE DATOS
+            
     ## ACTUALIZAR UN PRODUCTO
     def actualizar_dato(self) -> bool:
         estado_ope: bool = False
@@ -188,27 +208,6 @@ class Producto(object):
         finally:
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
             return lista_productos
-
-
-    ## BUSCADOR POR NOMBRE
-    def buscarProducto(self, nombre:str):
-        lista_productos = None
-        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
-        try:
-            cursor = database.cursor()  # OBTENER OBJETO CURSOR
-            query = '''
-                    SELECT *
-                    FROM producto
-                    WHERE nombre LIKE '%{}%'
-                    '''.format(nombre)
-            cursor.execute(query)
-            lista_productos = cursor.fetchall()
-            return lista_productos
-        except Exception as e:
-            database.rollback()  # RESTAURAR ANTES DE CAMBIOS POR ERROR
-            print("Error: {}".format(e))
-        finally:
-            database.close()  # CERRAR CONEXION CON BASE DE DATOS
 
     ## ACTUALIZAR STOCK DE UN PRODUCTO
     def actualizarProductoStock(self, id_prod:str) -> bool:
