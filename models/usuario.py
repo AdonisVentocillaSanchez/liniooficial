@@ -135,4 +135,4 @@ class Usuario(object):
             print("Error: {}".format(e))
         finally:
             database.close()
-            return usuario
+        return usuario

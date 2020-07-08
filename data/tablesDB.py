@@ -54,15 +54,17 @@ DROP TABLE IF EXISTS producto;
 """)
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS producto (
-    codigo TEXT,
+    codigo TEXT PRIMARY KEY,
     nombre TEXT NOT NULL,
     descripcion TEXT NOT NULL,
     precio DOUBLE,
     stock INTEGER,
     categoria INTEGER,
+    imagen TEXT,
     tienda Integer NOT NULL,
     FOREIGN KEY(categoria) REFERENCES categoria(codigo_categoria),
     FOREIGN KEY(tienda) REFERENCES proveedor(codigo)
     )"""
     )
 con.commit()
+

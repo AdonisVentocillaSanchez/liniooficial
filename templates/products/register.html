@@ -18,8 +18,12 @@
     <label for="nombre">Nombre del producto</label><br>
     <input id="nombre" type="text" name="nombre"><br><br>
     <!-- Input de Categoria -->
-    <label for="categoria">Categoria del producto(1 al 8)</label><br>
-    <input id="categoria" type="number" name="categoria"><br><br>
+    <label for="categoria">Categoria del producto</label><br>
+    <select name="categoria" id="categoria">
+    {% for categoria in categoriasB %}
+      <option value="{{ categoria[0] }}">{{ categoria[1] }}</option>
+    {% endfor %}
+    </select><br>
     <!-- Input de Descripción -->
     <label for="descripcion">Descripción</label><br>
     <input id="descripcion" type="text" name="descripcion"><br><br>

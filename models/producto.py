@@ -7,25 +7,25 @@ class IterableProducto(type):
 
 class Producto(object):
     __metaclass__ = IterableProducto
-    def __init__(self, codigo:str = None, nombre: str= None, descripcion: str= None, precio: float= None, stock: int= None, categoria: int= None, tienda:str= None):
+    def __init__(self, codigo:int = None, nombre: str= None, descripcion: str= None, precio: float= None, stock: int= None, categoria: int= None, imagen: str=None, tienda:str= None):
         self.codigo       = codigo
         self.nombre       = nombre
         self.descripcion  = descripcion
         self.precio       = precio
         self.stock        = stock
         self.categoria    = categoria
+        self.imagen       = imagen
         self.tienda       = tienda
 
-    ## GETTER ##
     @property
-    def codigo(self) -> str:
+    def codigo(self):
         return self.__codigo
     @codigo.setter
     def codigo(self, new_value):
         self.__codigo = new_value
     
     @property
-    def nombre(self) -> str:
+    def nombre(self):
         return self.__nombre
     @nombre.setter
     def nombre(self, new_value):
@@ -60,6 +60,13 @@ class Producto(object):
         self.__categoria = new_value
 
     @property
+    def imagen(self):
+        return self.__imagen
+    @imagen.setter
+    def imagen(self, new_value):
+        self.__imagen = new_value
+
+    @property
     def tienda(self):
         return self.__tienda
     @tienda.setter
@@ -91,10 +98,10 @@ class Producto(object):
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
-                    INSERT INTO producto(codigo, nombre, descripcion, precio, stock, categoria, tienda)
-                    VALUES ('{}', '{}', '{}', {}, {}, {}, '{}')
-                    '''.format(self.generarCodigo(), self.__nombre, self.__descripcion,
-                            self.__precio, self.__stock, self.__categoria, self.__tienda)
+                    INSERT INTO producto(nombre, descripcion, precio, stock, categoria, imagen, tienda)
+                    VALUES ('{}', '{}', {}, {}, {}, '{}', {})
+                    '''.format(self.__nombre, self.__descripcion,
+                            self.__precio, self.__stock, self.__categoria, self.__imagen, self.__tienda)
             cursor.execute(query)
             database.commit()  # CONFIRMAR CAMBIOS QUERY
             estado_op = True
@@ -122,18 +129,17 @@ class Producto(object):
             raise e
         finally:
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
-
         return list_product
 
     ## OBTENER UN SOLO PRODUCTO POR CODIGO
-    def obtenerProducto(self, codigo:str):
+    def obtenerProducto(self, codigo:int):
         list_product = None
         database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
                 SELECT * FROM producto
-                WHERE codigo = '{}'
+                WHERE codigo = {}
                 '''.format(codigo)
 
             cursor.execute(query)  # EJECUTA LA OPERACION
@@ -143,10 +149,48 @@ class Producto(object):
             raise e
         finally:
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
-
         return list_product
 
-        ## BUSCADOR POR NOMBRE
+    ## OBTENER LOS PRODUCTOS SEGUN LA CATEGORIA
+    def obtenerProductosCategoria(self, idcat:int):
+        list_product = None
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
+        try:
+            cursor = database.cursor()  # OBTENER OBJETO CURSOR
+            query = '''
+                SELECT * FROM producto
+                WHERE categoria = {}
+                '''.format(idcat)
+
+            cursor.execute(query)  # EJECUTA LA OPERACION
+            list_product = cursor.fetchall()
+        except Exception as e:
+            database.rollback()  # RESTAURAR ANTES DE CAMBIOS POR ERROR
+            raise e
+        finally:
+            database.close()  # CERRAR CONEXION CON BASE DE DATOS
+        return list_product
+
+    ## OBTENER PRODUCTOS DE CADA TIENDA
+    def obtenerProductosTienda(self, idtienda:int):
+        list_product = None
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
+        try:
+            cursor = database.cursor()  # OBTENER OBJETO CURSOR
+            query = '''
+                SELECT * FROM producto
+                WHERE tienda = {}
+                '''.format(idtienda)
+            cursor.execute(query)  # EJECUTA LA OPERACION
+            list_product = cursor.fetchall()
+        except Exception as e:
+            database.rollback()  # RESTAURAR ANTES DE CAMBIOS POR ERROR
+            raise e
+        finally:
+            database.close()  # CERRAR CONEXION CON BASE DE DATOS
+        return list_product
+
+    ## BUSCADOR POR NOMBRE
     def buscarProducto(self, nombre:str):
         lista_productos = None
         database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
@@ -165,6 +209,7 @@ class Producto(object):
             print("Error: {}".format(e))
         finally:
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
+        return lista_productos
             
     ## ACTUALIZAR UN PRODUCTO
     def actualizar_dato(self) -> bool:
@@ -175,9 +220,9 @@ class Producto(object):
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
             UPDATE producto
-            SET descripcion = '{}', precio = {}, stock = {}
-            WHERE codigo = '{}'
-            '''.format(self.__descripcion, self.__precio, self.__stock, self.__codigo)
+            SET nombre = '{}', descripcion = '{}', precio = {}, stock = {}, categoria ={}
+            WHERE codigo = {}
+            '''.format(self.__nombre, self.__descripcion, self.__precio, self.__stock, self.__categoria, self.__codigo)
             cursor.execute(query)  # EJECUTA LA OPERACION
             database.commit()  # CONFIRMAR CAMBIOS QUERY
             estado_ope = True
@@ -187,37 +232,16 @@ class Producto(object):
         finally:
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
         return estado_ope
-    
-    ## BUSCADOR POR NOMBRE
-    def buscarProductoCategoria(self, id_Prod:int):
-        lista_productos = None
-        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
-        try:
-            cursor = database.cursor()  # OBTENER OBJETO CURSOR
-            query = '''
-                    SELECT *
-                    FROM producto
-                    WHERE categoria = {}
-                    '''.format(id_Prod)
-            cursor.execute(query)
-            lista_productos = cursor.fetchall()
-            return lista_productos
-        except Exception as e:
-            database.rollback()  # RESTAURAR ANTES DE CAMBIOS POR ERROR
-            print("Error: {}".format(e))
-        finally:
-            database.close()  # CERRAR CONEXION CON BASE DE DATOS
-            return lista_productos
 
-    ## ACTUALIZAR STOCK DE UN PRODUCTO
-    def actualizarProductoStock(self, id_prod:str) -> bool:
+    ## ELIMINAR UN PRODUCTO
+    def eliminarProducto(self, id_prod:int) -> bool:
         estado = False
         database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
-                UPDATE producto SET stock=stock-1 
-                WHERE codigo='{}' '''.format(id_prod)
+                DELETE FROM producto  
+                WHERE codigo={} '''.format(id_prod)
             cursor.execute(query)
             database.commit()  # CONFIRMAR CAMBIOS QUERY
             estado = True
@@ -227,5 +251,25 @@ class Producto(object):
             print("Error: {}".format(e))
         finally:
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
+        return estado
 
+    ## ACTUALIZAR STOCK DE UN PRODUCTO
+    def actualizarProductoStock(self, id_prod:int) -> bool:
+        estado = False
+        database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
+        try:
+            cursor = database.cursor()  # OBTENER OBJETO CURSOR
+            query = '''
+                UPDATE producto SET stock=stock-1 
+                WHERE codigo={} '''.format(id_prod)
+            cursor.execute(query)
+            database.commit()  # CONFIRMAR CAMBIOS QUERY
+            estado = True
+            return estado
+        except Exception as e:
+            database.rollback()  # RESTAURAR ANTES DE CAMBIOS POR ERROR
+            print("Error: {}".format(e))
+        finally:
+            database.close()  # CERRAR CONEXION CON BASE DE DATOS
+        return estado
     

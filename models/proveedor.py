@@ -88,5 +88,5 @@ class Proveedor(object):
         except Exception as e:
             print("Error: {}".format(e))
         finally:
-                database.close()
+            database.close()
         return dato

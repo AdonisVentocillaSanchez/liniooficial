@@ -2,7 +2,8 @@
 {% block content %}
 <!-- Header con logo de Linio -->
 {% include '/layouts/header.html' %}
-
+<!-- Incluyendo Culqi Checkout -->
+<script src="https://checkout.culqi.com/js/v3"></script>
 <div>
     <form role="form" id="Search", method="post">
         <!--Label para busqueda-->
@@ -33,6 +34,26 @@
   {% else %}
           <h2>Aún no hay producto disponibles</h2>
   {% endif %}
+
+  <button type="button" id="buyButton" >PROCEED TO CHECKOUT</button>
+
+  <script>
+  </script>
+
+  <script>
+    Culqi.publicKey = 'pk_test_V2pfZK0Tlub2Ufyb';
+    Culqi.settings({
+      title: 'Mi tienda Linio',
+      currency: 'PEN',
+      description: 'Carrito',
+      amount: 3500
+    });
+    $('#buyButton').on('click', function(e) {
+      // Abre el formulario con la configuración en Culqi.settings
+      Culqi.open();
+      e.preventDefault();
+  });
+  </script>
 
   <!-- Footer -->
 {% include '/layouts/footer.html' %}

@@ -163,6 +163,7 @@ def logoutP():
 @app.route('/registroProducto', methods=["get","post"])
 @login_requiredP
 def registrarProducto():
+    categorias = ClassCategoria.obtenerCategorias()
     if request.method == "POST":
         nombre = request.form["nombre"]
         categoria = int(request.form["categoria"])
@@ -186,15 +187,15 @@ def registrarProducto():
             return redirect("/")
         else:
             error = 'Verifique los datos'
-            return render_template('products/register.html', error=error)
+            return render_template('products/register.html', categoriasB=categorias, error=error)
 
-    return render_template('products/register.html')
+    return render_template('products/register.html', categoriasB=categorias)
 
 #Ruta para listar productos segun la categoria y buscador segun nombre dentro de la categoria
 @app.route('/productoCategoria/<id_categoria>', methods=["get","post"])
 def product_category(id_categoria):
     idCategoria = int(id_categoria)
-    product_list = ClassProducto.buscarProductoCategoria(idCategoria)
+    product_list = ClassProducto.obtenerProductosCategoria(idCategoria)
 
     if request.method == "POST":
         nombre = request.form["search"]
