@@ -2,17 +2,7 @@
 {% block content %}
 <!-- Header con logo de Linio -->
 {% include '/layouts/header.html' %}
-<!-- Incluyendo Culqi Checkout -->
-<script src="https://checkout.culqi.com/js/v3"></script>
-<div>
-    <form role="form" id="Search", method="post">
-        <!--Label para busqueda-->
-        <label for="search">Buscar producto</label>
-        <input id="search" type="text" name="search">
-        <button type="submit">Buscar</button>
-    </form>
-  </div>
-  
+
   {% if error %}
     <h3 style="color:Tomato;">{{error}}</h3>
   {% endif %}
@@ -25,35 +15,18 @@
   {% if product_list %}
     {% for product in product_list %}
             <div>
+              <img src="{{url_for('static', filename= product[6])}}" height="80" >
                 <p>Nombre del Producto: {{product[1]}}</p>
-                <p>Tienda: {{product[6]}}</p>
+                <p>Tienda: {{product[7]}}</p>
                 <p>Precio: {{product[3]}}</p>
                 <a href="{{ url_for('product_detail', idproducto = product[0]) }}">Ver producto</a>
+                <a href="{{ url_for('add_carrito', idproducto = product[0]) }}">Añadir a carrito</a>
             </div>
     {% endfor %}
   {% else %}
-          <h2>Aún no hay producto disponibles</h2>
+          <h2>Aún no hay producto disponible</h2>
   {% endif %}
 
-  <button type="button" id="buyButton" >PROCEED TO CHECKOUT</button>
-
-  <script>
-  </script>
-
-  <script>
-    Culqi.publicKey = 'pk_test_V2pfZK0Tlub2Ufyb';
-    Culqi.settings({
-      title: 'Mi tienda Linio',
-      currency: 'PEN',
-      description: 'Carrito',
-      amount: 3500
-    });
-    $('#buyButton').on('click', function(e) {
-      // Abre el formulario con la configuración en Culqi.settings
-      Culqi.open();
-      e.preventDefault();
-  });
-  </script>
 
   <!-- Footer -->
 {% include '/layouts/footer.html' %}

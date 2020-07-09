@@ -1,25 +1,54 @@
-<!-- El footer es la sección que va al final de la página -->
-<footer>
-    <!-- Botón para regresar a la página anterior desde cualquier parte -->
-	<script type="text/javascript">
-	  function volver(){
-	    history.back();
-	  }
-    </script>
-    <br><br>
-    <!-- En el footer pondremos información adicional sobre el negocio -->
-    <div class="card">
-        <div class="card-header">
-            Acerca de linio 
+
+<!-- Botón para regresar a la página anterior desde cualquier parte -->
+<script type="text/javascript">
+    function volver(){
+      history.back();
+    }
+  </script>
+  
+<!-- Footer -->
+<footer class="page-footer font-small black">
+
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left">
+      <!-- Grid row -->
+      <div class="row">
+        <!-- Grid column -->
+        <div class="col-md-3 mx-auto">
+          <!-- Links -->
+          <div class="card text-right" style="width: 18rem;">
+            <button type="button" onclick="volver()" class="btn btn-info">Regresar a la página anterior</button>
+         </div>
+          <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Acerca de linio</h5>
+  
+          <ul class="list-unstyled">
+            <li>
+                <a href="#" target="_blank">Historia</a>
+            </li>
+            <li>
+                <a href="#" target="_blank" >Ayuda</a>
+            </li>
+            <li>
+                <a href="#" target="_blank" >Términos y condiciones</a>
+            </li>
+            <li>
+                <a href="#" target="_blank" >Legales</a>
+            </li>
+          </ul>
+  
         </div>
-        <div class="card-body">
-            <div class="card text-right" style="width: 18rem;">
-                <button type="button" onclick="volver()" class="btn btn-info">Regresar a la página anterior</button>
-            </div>
-            <a href="#" target="_blank" class="btn btn-primary">Historia</a>
-            <a href="#" target="_blank" class="btn btn-primary">Ayuda</a>
-            <a href="#" target="_blank" class="btn btn-primary">Términos y condiciones</a>
-            <a href="#" target="_blank" class="btn btn-primary">Legales</a>
-        </div>
+    
       </div>
-</footer>
+      <!-- Grid row -->
+  
+    </div>
+    <!-- Footer Links -->
+  
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href="{{ url_for('home') }}"> Linio</a>
+    </div>
+    <!-- Copyright -->
+  
+  </footer>
+  <!-- Footer -->

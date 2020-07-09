@@ -12,7 +12,9 @@
     <li>Descripción: {{productos[2]}}</li>
     <li>Precio: {{productos[3]}}</li>
     <li>Disponibles: {{productos[4]}}</li>
-    <li>Tienda: {{productos[6]}}</li>
+    <li>Tienda: {{productos[7]}}</li>
+    <img src="{{url_for('static', filename= productos[6])}}" height="80" >
+    <a href="{{ url_for('add_carrito', idproducto = productos[0]) }}">Añadir a carrito</a>
 </ul>
 {% else %}
     <h2 style="color:red;">No se ha encontrado tu producto</h2>

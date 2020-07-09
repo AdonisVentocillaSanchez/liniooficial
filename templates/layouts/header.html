@@ -15,8 +15,8 @@
                   Compras
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item disabled" href="#">Carrito</a>
-                  <a class="dropdown-item disabled" href="#">Mis Compras</a>
+                  <a class="dropdown-item " href="{{ url_for('pagar_carrito') }}">Carrito</a>
+                  <a class="dropdown-item " href="{{ url_for('view_compras') }}">Mis Compras</a>
                 </div>
               </li>
             </ul>
@@ -35,6 +35,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('registrarProducto') }}">Añadir un producto</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('listarproducto') }}">Gestionar mis productos</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('logoutP') }}">Cerrar sesión</a>
@@ -62,5 +65,9 @@
             </ul>
           </div>  
         {% endif %}
+        <form action="{{ url_for('search_producto') }}" class="form-inline" role="form" id="Search", method="post">
+          <input id="search" class="form-control mr-sm-2" type="text" name="search" placeholder="Buscar producto" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
       </nav>
 </header>

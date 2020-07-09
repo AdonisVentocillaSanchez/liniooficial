@@ -1,0 +1,131 @@
+{% extends "/layouts/application.html" %}
+{% block content %}
+<!-- Header con logo de Linio -->
+{% include '/layouts/header.html' %}
+<!-- Incluyendo Culqi Checkout -->
+<script src="https://checkout.culqi.com/js/v3"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+  
+  {% if msg %}
+    <h3 style="color:Tomato;">{{msg}}</h3>
+  {% endif %}
+
+  <!-- Detalle del producto-->
+<h2>Carrito de Compras</h2>
+{% if 'product_list' and 'precio_total' in session %}
+
+  {% for producto in session['product_list'] %}
+  <div>
+    <ul>
+        <li>Codigo: PRO00{{producto[0]}}</li>
+        <li>Producto: {{producto[1]}}</li>
+        <li>Precio: {{producto[2]}}</li>
+    </ul>
+  </div>  
+  {% endfor %}
+  <div>
+    <p>Total a pagar: {{session['precio_total']}}</p>
+  </div>
+  <div>
+    <a href="{{ url_for('empty_cart') }}">Eliminar Carrito</a>
+  </div>
+  
+
+{% endif %}
+
+<!--Formulario de registro -->
+<form role="form" id="registerPedido" name="registerPedido" action="{{url_for('pagar_carrito')}}" method="post">
+    
+    <h2>INFORMACIÓN DE ENVÍO</h2>
+    <ul>
+        <li>Costo de envío:</li>
+        <li>Lima: S/.10.00</li>
+        <li>Provincia: S/.15.00</li>
+    </ul><br>
+    <!-- Input de provincia -->
+    <label for="provincia">Provincia</label><br>
+    <input id="provincia" type="text" name="provincia" value="Lima" required><br><br>
+    <!-- Input de distrito -->
+    <label for="distrito">Distrito</label><br>
+    <input id="distrito" type="text" name="distrito" value="Lima" required><br><br>
+    <!-- Input de direccion -->
+    <label for="direccion">Direccón de envío</label><br>
+    <input id="direccion" type="text" name="direccion" required><br><br>
+
+    <h2>INFORMACIÓN DE TIPO DE COMPROBANTE</h2>
+    <!-- Input de Tipo de comprobante -->
+    <label for="comprobante">Tipo de comprobante</label><br>
+    <select id="comprobante"name="comprobante" class="browser-default" required>
+        <option value="" disabled selected>Seleccione una opción</option>
+        <option value="boleta">Boleta</option>
+        <option value="factura">Factura</option>
+    </select>
+    <!-- Input de RUC -->
+    <label for="ruc">RUC (*) solo si desea factura</label><br>
+    <input id="ruc" type="text" name="ruc" minlength="11" maxlength="11"><br><br>
+    <!-- Token de PAGO-->
+    <input id="paytoken"	type="hidden" name="paytoken"  value="">
+    <!-- Monto a pagar-->
+    <input id="payamount"	type="hidden" name="payamount" value="{{session['precio_total']}}">
+    <button type="button" id="buyButton" >PROCEED TO CHECKOUT</button>
+</form>
+    
+  <script>
+    Culqi.publicKey = 'pk_test_V2pfZK0Tlub2Ufyb';
+    var precio 	= $("input[name='payamount']").val()*100;
+    var provincia	= $("input[name='provincia']").val();
+    if(provincia ==="Lima"){
+      precio = precio + 1000;
+    }else{
+      precio = precio + 1500;
+    }
+
+    Culqi.settings({
+      title: 'Mi tienda Linio',
+      currency: 'PEN',
+      description: 'Carrito',
+      amount: precio
+    });
+    $('#buyButton').on('click', function(e) {
+      // Abre el formulario con la configuración en Culqi.settings
+      Culqi.open();
+      e.preventDefault();
+  });
+  </script>
+
+  <script>        
+    // Recibimos el token desde los servidores de Culqi
+    function culqi() {
+      if (Culqi.token) { 
+        // Token creado exitosamente!
+        // Obtener el token ID
+        var token = Culqi.token.id;
+        $("#paytoken").val(token);	
+        formSubmit();
+  
+      } else { // Hubo algun problema!
+        // Mostramos JSON de objeto error en consola
+        console.log('Culqi Error');	
+        console.log(Culqi.error);	
+        //console.log(Culqi.error.user_message);	
+        
+        Swal.fire({
+          title: 'Culqi Error',
+          text: Culqi.error,
+          icon: 'error',
+          confirmButtonText: 'Aceptar Error'
+        });
+        
+      }				
+    };
+  
+    function formSubmit() {
+        document.registerPedido.submit()
+    }
+  </script> 
+
+  <!-- Footer -->
+{% include '/layouts/footer.html' %}
+  
+{% endblock %}

@@ -4,6 +4,10 @@
 <!-- Header con logo de Linio -->
 {% include '/layouts/header.html' %}
 
+{% if msg %}
+  <h3 style="color:Tomato;">{{msg}}</h3><br>
+{% endif %}
+{% if product_list %}
 <!-- Tabla con los productos-->
 <table class="table-responsive table-striped">
     <thead>
@@ -19,27 +23,23 @@
       </tr>
     </thead>
     <tbody>
-    {% if product_list %}
+    
         {% for product in product_list %}
             <tr>
-                <th scope="row">{{product[0]}}</th>
+                <th scope="row">PRO00{{product[0]}}</th>
                 <td>{{product[1]}}</td>
                 <td>{{product[2]}}</td>
                 <td>{{product[3]}}</td>
                 <td>{{product[4]}}</td>
                 <td>{{product[5]}}</td>
-                <td><a href="{{ url_for('product_delete', idproducto = product[0]) }}">Modificar</a></td>
+                <td><a href="{{ url_for('product_modify', idproducto = product[0]) }}">Modificar</a></td>
                 <td><a href="{{ url_for('product_delete', idproducto = product[0]) }}">Eliminar</a></td>
             </tr>
         {% endfor %}
-    {% else %}
-        <tr>
-            <th scope="row" colspan="8">Aún no tiene productos registrados</th>
-        </tr>
-    {% endif %}
     </tbody>
   </table>
 
+  {% endif %}
 <!-- Footer -->
 {% include '/layouts/footer.html' %}
 {% endblock %}

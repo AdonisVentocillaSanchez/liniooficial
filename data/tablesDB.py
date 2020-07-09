@@ -12,14 +12,14 @@ DROP TABLE IF EXISTS usuario;
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS usuario (
     codigo INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombres TEXT NOT NULL,
-    apellidos TEXT NOT NULL,
-    documento TEXT NOT NULL,
-    edad INTEGER,
-    email TEXT NOT NULL,
-    telefono INTEGER,
-    username TEXT NOT NULL,
-    password TEXT NOT NULL)
+    nombres TEXT(30) NOT NULL,
+    apellidos TEXT(30) NOT NULL,
+    documento TEXT(10) NOT NULL,
+    edad INTEGER(2),
+    email TEXT(30) NOT NULL,
+    telefono INTEGER(10),
+    username TEXT(30) NOT NULL,
+    password TEXT(30) NOT NULL)
     """)
 con.commit()
 
@@ -30,9 +30,9 @@ DROP TABLE IF EXISTS proveedor;
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS proveedor (
     codigo INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre TEXT NOT NULL,
-    direccion TEXT NOT NULL,
-    RUC INTEGER,
+    nombre TEXT(50) NOT NULL,
+    direccion TEXT(50) NOT NULL,
+    RUC INTEGER(11),
     password TEXT NOT NULL)
     """)
 con.commit()
@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS producto;
 """)
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS producto (
-    codigo TEXT PRIMARY KEY,
+    codigo INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
     descripcion TEXT NOT NULL,
     precio DOUBLE,
@@ -62,9 +62,25 @@ CREATE TABLE IF NOT EXISTS producto (
     categoria INTEGER,
     imagen TEXT,
     tienda Integer NOT NULL,
-    FOREIGN KEY(categoria) REFERENCES categoria(codigo_categoria),
+    FOREIGN KEY(categoria) REFERENCES categoria(codigo),
     FOREIGN KEY(tienda) REFERENCES proveedor(codigo)
     )"""
     )
 con.commit()
 
+#Creación de tabla Producto
+cursor.execute("""
+DROP TABLE IF EXISTS pedido;
+""")
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS pedido (
+    codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo_usuario INTEGER,
+    estado STRING,
+    tipo_comprobante STRING,
+    hashCulqi STRING,
+    direccion_envio STRING,
+    pago DOUBLE,
+    fecha_emision DATETIME NOT NULL,
+    FOREIGN KEY(codigo_usuario) REFERENCES usuario(codigo))""")
+con.commit()

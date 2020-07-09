@@ -13,7 +13,7 @@
 
 
 <!--Formulario de registro -->
-<form role="form" id="RegisterProductForm", method="post">
+<form role="form" id="RegisterProductForm" method="post" enctype="multipart/form-data">
     <!-- Input de Nombre -->
     <label for="nombre">Nombre del producto</label><br>
     <input id="nombre" type="text" name="nombre"><br><br>
@@ -33,6 +33,9 @@
     <!-- Input de Stock -->
     <label for="stock">Stock</label><br>
     <input id="stock" type="number" name="stock"><br><br>
+    <!-- Input de Imagen -->
+    <label for="imagen">Imagen del Producto</label><br>
+    <input id="imagen" type="file" name="imagen" accept="image/png, image/jpeg"><br><br>
     <!-- Enviar formulario-->
     <button type="submit">Registrar Producto</button>
 </form>

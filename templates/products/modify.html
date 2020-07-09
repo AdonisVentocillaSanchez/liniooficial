@@ -1,0 +1,50 @@
+{% extends "/layouts/application.html" %}
+{% block content %}
+<!-- Header con logo de Linio -->
+{% include '/layouts/header.html' %}
+
+<!-- Título de la página -->
+<h1>Modificar datos de Producto</h1>
+
+<!-- Mensaje de error -->
+{% if msg %}
+  <h3 style="color:Tomato;">{{msg}}</h3>
+{% endif %}
+
+{% if productoMod %}
+  <!--Formulario de registro -->
+<form role="form" id="ModificarProductForm" method="post">
+  <!-- Input de Nombre -->
+  <label for="nombre">Nombre del producto</label><br>
+  <input id="nombre" type="text" name="nombre" value="{{productoMod[1]}}"><br><br>
+  <!-- Input de Categoria -->
+  <label for="categoria">Categoria del producto</label><br>
+  <select name="categoria" id="categoria">
+  {% for categoria in categoriasB %}
+      {% if categoria[0] == productoMod[5] %}
+      <option value="{{ categoria[0] }}" selected>{{ categoria[1] }}</option>
+      {% else %}
+      <option value="{{ categoria[0] }}">{{ categoria[1] }}</option>
+      {% endif %}
+  {% endfor %}
+  </select><br>
+  <!-- Input de Descripción -->
+  <label for="descripcion">Descripción</label><br>
+  <input id="descripcion" type="text" name="descripcion" value="{{productoMod[2]}}"><br><br>
+  <!-- Input de Precio -->
+  <label for="precio">Precio</label><br>
+  <input id="precio" type="number" name="precio" value="{{productoMod[3]}}"><br><br>
+  <!-- Input de Stock -->
+  <label for="stock">Stock</label><br>
+  <input id="stock" type="number" name="stock" value="{{productoMod[4]}}"><br><br>
+  <!-- Enviar formulario-->
+  <button type="submit">Modificar Producto</button>
+</form>
+{% endif %}
+
+
+
+
+<!-- Footer -->
+{% include '/layouts/footer.html' %}
+{% endblock %}

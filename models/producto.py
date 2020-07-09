@@ -212,7 +212,7 @@ class Producto(object):
         return lista_productos
             
     ## ACTUALIZAR UN PRODUCTO
-    def actualizar_dato(self) -> bool:
+    def actualizarProducto(self) -> bool:
         estado_ope: bool = False
         database = sqlite3.connect("data/linio.db")  # ABRIR CONEXION CON BASE DE DATOS
 
